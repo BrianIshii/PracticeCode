@@ -14,7 +14,6 @@ class TestBFS(unittest.TestCase):
 
     def test_graph_one(self):
         self.assertEqual(self.graph_one.breadth_first_search(2), "2031") 
-        print(self.graph_one)
 
 if __name__ == '__main__':
     unittest.main()
