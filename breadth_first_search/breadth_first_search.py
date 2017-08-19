@@ -17,17 +17,17 @@ class Graph:
         traversal_order = ""
         visited = [False]*(len(self.graph))
 
-        queue = []
+        queue = empty_queue()
         
-        queue.append(start)
+        enqueue(queue, start)
         visited[start] = True
 
-        while queue:
-            edge = queue.pop(0)
+        while not is_empty(queue):
+            edge, queue = dequeue(queue)
             traversal_order += str(edge)
             for i in self.graph[edge]:
                 if visited[i] == False:
-                    queue.append(i)
+                    enqueue(queue, i)
                     visited[i] = True
         return traversal_order
 
