@@ -42,26 +42,48 @@ class Graph:
             v2.edges.append(k1)
         v1.edges.append(k2)
 
-
- 
+    # Graph AnyValue ->
+    # returns a string of the traversal order
     def breadth_first_search(self, start):
-        if start not in self.graph:
-            raise KeyError()
-        traversal_order = ""
+        try:
+            vertex_start = self.graph.get(start)
+            
+            traversal_order = ""
 
-        queue = empty_queue()
-        
-        queue.enqueue(start)
-        self.graph[start].visited = True
+            queue = empty_queue()
+            queue.enqueue(start)
+            vertex_start.visited = True
 
-        while not is_empty(queue):
-            vertex = queue.dequeue()
-            traversal_order += str(vertex)
-            for i in self.graph[vertex].edges:
-                if self.graph[i].visited == False:
-                    queue.enqueue(i)
-                    self.graph[i].visited = True
-        return traversal_order
+            while not queue.is_empty():
+                item = queue.dequeue()
+                traversal_order += str(item)
+                vertex = self.graph.get(get_key(item))
+                for i in vertex.edges:
+                    temp = self.graph.get(get_key(i))
+                    if temp.visited is False:
+                        queue.enqueue(i)
+                        temp.visited = True
+            return traversal_order
+        except LookupError:
+            print("Enter a valid item")
+
+    def reset_visited(self, start):
+        try:
+            vertex_start = self.graph.get(start)
+            queue = empty_queue()
+            queue.enqueue(start)
+            vertex_start.visited = False 
+
+            while not queue.is_empty():
+                item = queue.dequeue()
+                vertex = self.graph.get(get_key(item))
+                for i in vertex.edges:
+                    temp = self.graph.get(get_key(i))
+                    if temp.visited is True:
+                        queue.enqueue(i)
+                        temp.visited = False
+        except LookupError:
+            print("Enter a valid item")
 
     def is_vertex(self, value):
         try:

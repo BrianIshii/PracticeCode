@@ -56,34 +56,43 @@ class TestBFS(unittest.TestCase):
         self.assertEqual(str(temp), "Graph(HashTable([[(0, Vertex(0, ['hi']))," +
         " (104, Vertex('hi', []))], [], [], [], [], [], [], []], 8, 2, 1))") 
 
+    def test_add_edge_one_vertices_cross_edge_true(self):
+        temp = Graph()
+        temp.add_vertex(0)
+        temp.add_edge(0, "hi", cross_edge=True)
+        self.assertEqual(str(temp), "Graph(HashTable([[(0, Vertex(0, ['hi']))," +
+        " (104, Vertex('hi', [0]))], [], [], [], [], [], [], []], 8, 2, 1))") 
 
     def test_add_edge_no_vertices(self):
-        pass
+        temp = Graph()
+        temp.add_edge(0, "hi")
+        self.assertEqual(str(temp), "Graph(HashTable([[(0, Vertex(0, ['hi']))," +
+        " (104, Vertex('hi', []))], [], [], [], [], [], [], []], 8, 2, 1))") 
+
+    def test_add_edge_no_vertices_cross_edge_true(self):
+        temp = Graph()
+        temp.add_edge(0, "hi", cross_edge=True)
+        self.assertEqual(str(temp), "Graph(HashTable([[(0, Vertex(0, ['hi']))," +
+        " (104, Vertex('hi', [0]))], [], [], [], [], [], [], []], 8, 2, 1))") 
 
     def test_get_key(self):
-        pass
+        self.assertEqual(get_key(1), 1)
+        self.assertEqual(get_key("hi"), 104)
 
-    
-
-
-"""
     def test_graph_one_0(self):
         self.assertEqual(self.graph_one.breadth_first_search(0), "0123") 
         
     def test_graph_one_1(self):
+        self.graph_one.reset_visited(0)
         self.assertEqual(self.graph_one.breadth_first_search(1), "1203") 
 
     def test_graph_one_2(self):
+        self.graph_one.reset_visited(1)
         self.assertEqual(self.graph_one.breadth_first_search(2), "2031") 
 
     def test_graph_one_3(self):
-         self.assertEqual(self.graph_one.breadth_first_search(3), "3")
+        self.graph_one.reset_visited(2)
+        self.assertEqual(self.graph_one.breadth_first_search(3), "3")
     
-    def test_add_cross_true(self):
-        temp = Graph()
-        temp.add_edge(0, 1, cross_edge=True)
-        self.assertEqual(temp.breadth_first_search(0), "01")
-        self.assertEqual(temp.breadth_first_search(1), "10")
-"""
 if __name__ == '__main__':
     unittest.main()
