@@ -18,7 +18,46 @@ class Queue:
     def __repr__(self):
         return ("Queue({!r}, {!r}, {!r}, {!r}, {!r})".format(self.array,
             self.front, self.back, self.capcity, self.length))
-                
+    # Queue AnyValue ->            
+    # adds the AnyValue to the end of the Queue
+    def enqueue(val):
+        if self.length == self.capcity:
+            raise IndexError()
+        else:
+            if self.back == self.capcity:
+                self.back = 0
+            self.array[self.back] = val
+            self.length += 1
+            self.back += 1
+
+    # Queue ->
+    # returns the first element in the queue while removing it
+    def dequeue():
+        if self.length == 0:
+            raise IndexError():
+        else:
+            if self.front = self.capcity:
+                self.front = 0
+            val = self.array[self.front]
+            self.front += 1
+            self.length -= 1
+
+    # Queue ->
+    # returns the first element in the queue
+    def peek():
+        if self.length == 0:
+            raise IndexError()
+        else:
+            return self.array[self.front]
+    # Queue ->
+    # returns the length of the Queue
+    def size():
+        return self.length
+    
+    # Queue ->
+    # Determines if the Queue is empty
+    def is_empty():
+        return self.length == 0
 # -> Queue
 # returns an empty Queue
 def empty_queue():
