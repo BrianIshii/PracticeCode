@@ -18,21 +18,44 @@ class TestBFS(unittest.TestCase):
 
     def test_graph_repr_empty(self):
         temp = Graph()
-        self.assertEqual(str(temp), "Graph({}, 0)")
+        self.assertEqual(str(temp), "Graph(HashTable(" +
+                "[[], [], [], [], [], [], [], []], 8, 0, 0))")
 
     def test_add_vertex(self):
         temp = Graph()
         temp.add_vertex(0)
-        self.assertEqual(str(temp), "Graph({0: Vertex(0, [])}, 1)")
+        self.assertEqual(str(temp), "Graph(HashTable" +
+        "([[(0, Vertex(0, []))], [], [], [], [], [], [], []], 8, 1, 0))")
         temp.add_vertex("hi")
-        self.assertEqual(str(temp), "Graph({0: Vertex(0, []), " +
-                "4: Vertex('hi', [])}, 2)")
+        self.assertEqual(str(temp), "Graph(HashTable([[(0, Vertex(0, []))," +
+        " (104, Vertex('hi', []))], [], [], [], [], [], [], []], 8, 2, 1))") 
 
     def test_add_edge_two_vertices(self):
-        pass
+        temp = Graph()
+        temp.add_vertex(0)
+        temp.add_vertex("hi")
+        temp.add_edge(0, "hi")
+        self.assertEqual(str(temp), "Graph(HashTable([[(0, Vertex(0, ['hi']))," +
+        " (104, Vertex('hi', []))], [], [], [], [], [], [], []], 8, 2, 1))") 
+        temp.add_edge("hi", 0)
+        self.assertEqual(str(temp), "Graph(HashTable([[(0, Vertex(0, ['hi']))," +
+        " (104, Vertex('hi', [0]))], [], [], [], [], [], [], []], 8, 2, 1))") 
 
+    def test_add_edge_two_vertices_cross_edge_true(self):
+        temp = Graph()
+        temp.add_vertex(0)
+        temp.add_vertex("hi")
+        temp.add_edge(0, "hi", cross_edge=True)
+        self.assertEqual(str(temp), "Graph(HashTable([[(0, Vertex(0, ['hi']))," +
+        " (104, Vertex('hi', [0]))], [], [], [], [], [], [], []], 8, 2, 1))") 
+        
     def test_add_edge_one_vertices(self):
-        pass
+        temp = Graph()
+        temp.add_vertex(0)
+        temp.add_edge(0, "hi")
+        self.assertEqual(str(temp), "Graph(HashTable([[(0, Vertex(0, ['hi']))," +
+        " (104, Vertex('hi', []))], [], [], [], [], [], [], []], 8, 2, 1))") 
+
 
     def test_add_edge_no_vertices(self):
         pass

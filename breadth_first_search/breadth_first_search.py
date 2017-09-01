@@ -1,5 +1,7 @@
 from collections import defaultdict
 from circular_queue.circular_queue import *
+from hash_table_chaining.hash_table_chaining import *
+
 # a Graph is a defaultdict object
 # an AnyValue is an element of any type
 
@@ -21,26 +23,24 @@ class Vertex:
 class Graph:
 
     def __init__(self):
-        self.graph = {} # a dictionay
-        self.vertex_count = 0 # an int
-        self.hash_table_size = 100 # an int
+        self.graph = HashTable() # a HashTable
 
     def __repr__(self):
-        return "Graph({!r}, {!r})".format(self.graph, self.vertex_count)
+        return "Graph({!r})".format(self.graph)
 
     # Graph AnyValue ->
     # adds a vertex object to the graph
     def add_vertex(self, value):
-        self.graph[get_key(self.hash_table_size, value)] = Vertex(value)
-        self.vertex_count += 1
+        self.graph.insert(get_key(value), Vertex(value))
     
-    # Graph AnyValue AnyValue [bool]
-    def add_edge(self, v1, v2, cross_edge=False):
-        key1 = self.is_vertex(v1)
-        key2 = self.is_vertex(v2)
+    # Graph AnyValue AnyValue [bool] ->
+    # adds an edge between two vertices
+    def add_edge(self, k1, k2, cross_edge=False):
+        v1 = self.is_vertex(k1)
+        v2 = self.is_vertex(k2)
         if cross_edge is True:
-            self.graph[key2].edges.append(v1)
-        self.graph[key1].edges.append(v2)
+            v2.edges.append(k1)
+        v1.edges.append(k2)
 
 
  
@@ -64,13 +64,15 @@ class Graph:
         return traversal_order
 
     def is_vertex(self, value):
-        if value not in self.graph:
+        try:
+            return self.graph.get(get_key(value))
+        except LookupError:
             self.add_vertex(value)
-        return get_key(self.hash_table_size, value)
+            return self.graph.get(get_key(value))
 
 # AnyValue -> int
 # returns the key for the value
-def get_key(hash_table_size, value):
+def get_key(value):
     if type(value) is not int:
         value = ord(value[0])
-    return value % hash_table_size
+    return value

@@ -74,6 +74,9 @@ class HashTableTests(unittest.TestCase):
         self.assertEqual(self.two.get(9), "two")
 
     def test_get_lookup_error(self):
+        temp = empty_hash_table()
+        temp.insert(1, "one")
+        self.assertRaises(LookupError, temp.get, 9)
         self.assertRaises(LookupError, self.empty.get, 1)
         self.assertRaises(LookupError, self.empty.get, 20)
 

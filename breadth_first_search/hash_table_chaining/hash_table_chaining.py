@@ -58,7 +58,8 @@ class HashTable:
         else:
             for k, i in self.ls[index]:
                 if key == k:
-                    return i   
+                    return i
+            raise LookupError()
     # HashTable Int -> HashTable
     # returns the HashTable with the Item of the key removed
     def remove(self, key):
