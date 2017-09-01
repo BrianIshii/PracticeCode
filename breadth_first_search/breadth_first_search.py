@@ -51,15 +51,15 @@ class Graph:
 
         queue = empty_queue()
         
-        enqueue(queue, start)
+        queue.enqueue(start)
         self.graph[start].visited = True
 
         while not is_empty(queue):
-            vertex, queue = dequeue(queue)
+            vertex = queue.dequeue()
             traversal_order += str(vertex)
             for i in self.graph[vertex].edges:
                 if self.graph[i].visited == False:
-                    enqueue(queue, i)
+                    queue.enqueue(i)
                     self.graph[i].visited = True
         return traversal_order
 
