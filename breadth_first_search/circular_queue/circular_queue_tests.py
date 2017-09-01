@@ -25,33 +25,33 @@ class TestQueue(unittest.TestCase):
 
     def test00_interface(self):
         test_queue = empty_queue()
-        test_queue = enqueue(test_queue, "foo")
-        peek(test_queue)
-        _, test_queue = dequeue(test_queue)
-        size(test_queue)
-        is_empty(test_queue)
+        test_queue.enqueue("foo")
+        _ = test_queue.peek()
+        _ = test_queue.dequeue()
+        test_queue.size()
+        test_queue.is_empty()
     
     def test_queue_repr(self):
         temp = "Queue([" + "None, " * 4999 + "None], 0, 0, 5000, 0)"
-        self.assertEqual(str(empty_queue()),temp)
+        self.assertEqual(str(empty_queue()), temp)
 
     def test_empty_queue(self):
         test = Queue()
-        self.assertEqual(empty_queue(),test)
+        self.assertEqual(empty_queue(), test)
 
     def test_enqueue(self):
         test = Queue()
-        test = enqueue(test, 1)
+        test.enqueue(1)
         self.assertEqual(test, self.one)
-        test = enqueue(test, 2)
+        test.enqueue(2)
         self.assertEqual(test, self.onetwo)
 
     def test_enqeue_reset(self):
         test = Queue()
         for i in range(5000):
-            test = enqueue(test, i)
-        val, test = dequeue(test)
-        test = enqueue(test, 5001)
+            test.enqueue(i)
+        val = test.dequeue()
+        test.enqueue(5001)
         temp = [None] * 5000
         for i in range(5000):
             temp[i] = i
@@ -61,18 +61,18 @@ class TestQueue(unittest.TestCase):
     def test_enqueue_error(self):
         test = Queue()
         for i in range(5000):
-            test = enqueue(test, i)
-        self.assertRaises(IndexError, enqueue, test, 1)
+            test.enqueue(i)
+        self.assertRaises(IndexError, test.enqueue, 1)
 
     def test_dequeue_error(self):
         test = Queue()
-        self.assertRaises(IndexError, dequeue, test)
+        self.assertRaises(IndexError, test.dequeue)
 
     def test_dequeue(self):
         test = Queue()
-        test = enqueue(test, 1)
-        test = enqueue(test, 2)
-        self.assertEqual(dequeue(test), (1, self.dequeue))
+        test.enqueue(1)
+        test.enqueue(2)
+        self.assertEqual(test.dequeue(), 1)
 
     def test_deqeue_reset(self):
         temp = [None] * 5000
@@ -80,13 +80,13 @@ class TestQueue(unittest.TestCase):
             temp[i] = i
         test = Queue()
         for i in range(5000):
-            test = enqueue(test, i)
+            test.enqueue(i)
         for i in range(4999):
-            val, test = dequeue(test)
+            test.dequeue()
         for i in range(50):
-            test = enqueue(test, i)
+            test.enqueue(i)
         for i in range(4):
-            val, test = dequeue(test)
+            test.dequeue()
         self.assertEqual(test.array, temp)
         self.assertEqual(test.front, 3)
 
@@ -96,53 +96,53 @@ class TestQueue(unittest.TestCase):
             temp[i] = i
         test = Queue()
         for i in range(5000):
-            test = enqueue(test, i)
+            test.enqueue(i)
         for i in range(5000):
-            val, test = dequeue(test)
+            test.dequeue()
         for i in range(50):
-            test = enqueue(test, i)
+            test.enqueue(i)
         for i in range(50):
-            val, test = dequeue(test)
+            test.dequeue()
         self.assertEqual(test.array, temp)
         self.assertEqual(test.front, 50)
 
     def test_peek_reset(self):
         test = Queue()
         for i in range(5000):
-            test = enqueue(test, i)
+            test.enqueue(i)
         for i in range(5000):
-            val, test = dequeue(test)
+            test.dequeue()
         for i in range(50):
-            test = enqueue(test, i)
+            test.enqueue(i)
         for i in range(50):
-            val, test = dequeue(test)
-        self.assertRaises(IndexError, peek, test)
+            test.dequeue()
+        self.assertRaises(IndexError, test.peek)
 
     def test_peek_error(self):
         test = Queue()
-        self.assertRaises(IndexError, peek, test)
+        self.assertRaises(IndexError, test.peek)
     
     def test_peek(self):
         test = Queue()
-        test = enqueue(test, 1)
-        test = enqueue(test, 2)
-        self.assertEqual(peek(test), 1)
-        val, test = dequeue(test)
-        self.assertEqual(peek(test), 2)
+        test.enqueue(1)
+        test.enqueue(2)
+        self.assertEqual(test.peek(), 1)
+        test.dequeue()
+        self.assertEqual(test.peek(), 2)
 
     def test_size(self):
         test = Queue()
-        self.assertEqual(size(test),0)
-        test = enqueue(test, 1)
-        self.assertEqual(size(test),1)
-        test = enqueue(test, 2)
-        self.assertEqual(size(test),2)
+        self.assertEqual(test.size(), 0)
+        test.enqueue(1)
+        self.assertEqual(test.size(), 1)
+        test.enqueue(2)
+        self.assertEqual(test.size(),2)
 
     def test_is_empty(self):
         test = Queue()
-        self.assertEqual(is_empty(test), True)
-        test = enqueue(test, 1)
-        self.assertEqual(is_empty(test), False)
+        self.assertEqual(test.is_empty(), True)
+        test.enqueue(1)
+        self.assertEqual(test.is_empty(), False)
  
 if __name__ == "__main__":
     unittest.main()

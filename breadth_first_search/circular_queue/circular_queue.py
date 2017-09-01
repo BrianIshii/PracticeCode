@@ -20,7 +20,7 @@ class Queue:
             self.front, self.back, self.capcity, self.length))
     # Queue AnyValue ->            
     # adds the AnyValue to the end of the Queue
-    def enqueue(val):
+    def enqueue(self, val):
         if self.length == self.capcity:
             raise IndexError()
         else:
@@ -32,79 +32,34 @@ class Queue:
 
     # Queue ->
     # returns the first element in the queue while removing it
-    def dequeue():
+    def dequeue(self):
         if self.length == 0:
-            raise IndexError():
+            raise IndexError()
         else:
-            if self.front = self.capcity:
+            if self.front == self.capcity:
                 self.front = 0
             val = self.array[self.front]
             self.front += 1
             self.length -= 1
+            return val
 
     # Queue ->
     # returns the first element in the queue
-    def peek():
+    def peek(self):
         if self.length == 0:
             raise IndexError()
         else:
             return self.array[self.front]
     # Queue ->
     # returns the length of the Queue
-    def size():
+    def size(self):
         return self.length
     
     # Queue ->
     # Determines if the Queue is empty
-    def is_empty():
+    def is_empty(self):
         return self.length == 0
 # -> Queue
 # returns an empty Queue
 def empty_queue():
     return Queue()
-
-# Queue AnyValue -> Queue
-# returns the Queue with the AnyValue added to the end of the Queue
-def enqueue(q, val):
-    if q.length == q.capcity:
-        raise IndexError()
-    else:
-        if q.back == q.capcity:
-            q.back = 0    
-        q.array[q.back] = val
-        q.length += 1
-        q.back += 1
-    return q
-
-# Queue -> Tuple(AnyValue, Queue)
-# returns a Tuple with be beginning value removed and the resulting Queue
-def dequeue(q):
-    if q.length == 0:
-        raise IndexError()
-    else:
-        if q.front == q.capcity:
-            q.front = 0
-        val = q.array[q.front]
-        q.front += 1
-        q.length -= 1
-    return (val, q)
-
-# Queue -> AnyValue
-# returns the element at the beginning of the Queue
-def peek(q):
-    if q.length == 0:
-        raise IndexError()
-    else:
-        val = q.array[q.front]
-    return val  
-
-# Queue -> Int
-# returns the number of elements in the queue
-def size(q):
-    return q.length
-
-# Queue -> bool
-# Determines whether the Queue is empty
-def is_empty(q):
-    return q.length == 0
-
